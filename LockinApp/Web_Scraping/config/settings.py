@@ -1,0 +1,7 @@
+HEADERS = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+REQUEST_DELAY = 1.5
+SENTENCES_PER_CHUNK = 4
+MIN_TEXT_LENGTH = 100
