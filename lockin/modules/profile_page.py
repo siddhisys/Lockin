@@ -4,15 +4,19 @@ from utils.db import save_user_profile
 DOMAINS = {
     "Artificial Intelligence": {
         "icon": "🤖",
-        "subdomains": ["Machine Learning", "Natural Language Processing", "Computer Vision"],
+        "subdomains": ["Machine Learning", "Natural Language Processing", "Computer Vision", "Deep Learning", "Reinforcement Learning"],
     },
     "Data Science": {
         "icon": "📊",
-        "subdomains": ["Statistical Analysis", "Data Visualisation", "Big Data Engineering"],
+        "subdomains": ["Statistical Analysis", "Data Visualisation", "Big Data Engineering", "Data Wrangling"],
+    },
+    "Programming": {
+        "icon": "💻",
+        "subdomains": ["Python", "JavaScript", "Data Structures & Algorithms"],
     },
     "Web Development": {
         "icon": "🌐",
-        "subdomains": ["Frontend Development", "Backend Development", "DevOps & Deployment"],
+        "subdomains": ["Frontend Development", "Backend Development"],
     },
 }
 LEVELS = ["Beginner", "Intermediate", "Advanced", "Expert"]
@@ -38,7 +42,7 @@ def render():
 
     col1, col2, col3 = st.columns([1, 2.5, 1])
     with col2:
-        # ── Basic Info ────────────────────────────────────────────────────
+        # -------- Basic Info ----------------------------
         st.markdown("### 👤 Basic Info")
         c1, c2 = st.columns(2)
         with c1:
@@ -48,7 +52,7 @@ def render():
 
         st.markdown("---")
 
-        # ── Domains ───────────────────────────────────────────────────────
+        # --------- Domains ----------------------------
         st.markdown("### 🎯 Domains of Interest")
         selected_domains = st.multiselect(
             "Choose domains", options=list(DOMAINS.keys()),
@@ -66,7 +70,7 @@ def render():
 
         st.markdown("---")
 
-        # ── Learning Style ────────────────────────────────────────────────
+        # -------- Learning Style ----------------------------
         st.markdown("### 🧠 Learning Style")
         current_style = pref.get("learning_style", LEARNING_STYLES[0])
         if current_style not in LEARNING_STYLES:
@@ -76,7 +80,7 @@ def render():
 
         st.markdown("---")
 
-        # ── Goal & Pace ───────────────────────────────────────────────────
+        # ------ Goal & Pace ----------------------------
         st.markdown("### 🚀 Goal & Pace")
         cg, cp = st.columns(2)
         with cg:
@@ -95,7 +99,7 @@ def render():
 
         st.markdown("---")
 
-        # ── Prior Knowledge ───────────────────────────────────────────────
+        # --------- Prior Knowledge ----------------------------
         st.markdown("### 🧠 Prior Knowledge")
         updated_knowledge = knowledge.copy()
         for domain in selected_domains:
@@ -126,7 +130,7 @@ def render():
                 }
                 st.markdown("---")
 
-        # ── Save Button ───────────────────────────────────────────────────
+        # ------- Save Button ----------------------------
         if st.button("💾 Save Changes", use_container_width=True):
             if not name.strip():
                 st.error("Please enter your name.")

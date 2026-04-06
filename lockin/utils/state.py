@@ -10,6 +10,10 @@ def init_app_state():
         # Scraper
         "scraped_pdf_bytes": None,
         "scraped_formatted": None,
+        "scrape_done": False,
+        # Summarization
+        "last_summary": None,
+        "summary_done": False,
         # Chatbot
         "vector_store": None,
         "chat_processed": False,
@@ -21,8 +25,6 @@ def init_app_state():
         "submitted": False,
         "quiz_started": False,
         "pdf_content": None,
-        # Summarization
-        "last_summary": None,
     }
     for k, v in defaults.items():
         if k not in st.session_state:

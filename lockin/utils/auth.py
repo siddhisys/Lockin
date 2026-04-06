@@ -16,6 +16,26 @@ def init_auth():
         if k not in st.session_state:
             st.session_state[k] = v
 
+    # Restore from query param written by localStorage JS
+    if not st.session_state["authenticated"]:
+        email = st.query_params.get("lockin_email")
+        if email:
+            user = get_user_by_email(email)
+            if user:
+                st.session_state.authenticated = True
+                st.session_state.user = {
+                    "id": user["id"],
+                    "email": user["email"],
+                    "full_name": user["full_name"],
+                }
+                profile = get_user_profile(user["id"])
+                if profile and profile.get("preferences"):
+                    st.session_state.onboarding_complete = True
+                    st.session_state.pref = profile["preferences"]
+                    st.session_state.knowledge = profile["knowledge"] or {}
+                else:
+                    st.session_state.onboarding_complete = False
+
 def login_user(email, password):
     user = get_user_by_email(email.strip().lower())
     if not user:
@@ -29,6 +49,9 @@ def login_user(email, password):
         "email": user["email"],
         "full_name": user["full_name"],
     }
+
+    # Save to localStorage via query param
+    st.query_params["lockin_email"] = user["email"]
 
     profile = get_user_profile(user["id"])
     if profile and profile.get("preferences"):
@@ -58,9 +81,13 @@ def signup_user(full_name, email, password):
     st.session_state.authenticated = True
     st.session_state.user = result
     st.session_state.onboarding_complete = False
+
+    st.query_params["lockin_email"] = result["email"]
+
     return True, "Account created!"
 
 def logout_user():
+    st.query_params.clear()
     for key in ["authenticated", "user", "onboarding_complete", "pref",
                 "knowledge", "step", "profile_complete", "current_page"]:
         if key in st.session_state:

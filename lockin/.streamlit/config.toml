@@ -1,2 +1,9 @@
 [client]
 showSidebarNavigation = false
+
+[server]
+runOnSave = true
+
+[runner]
+fastReruns = false
+

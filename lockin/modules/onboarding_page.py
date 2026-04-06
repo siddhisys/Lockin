@@ -1,20 +1,44 @@
 import streamlit as st
 from utils.db import save_user_profile
 
+# ----- Matches from scraper_page.py SCRAPING_SOURCES ---------------
 DOMAINS = {
     "Artificial Intelligence": {
         "icon": "🤖",
-        "subdomains": ["Machine Learning", "Natural Language Processing", "Computer Vision"],
+        "subdomains": [
+            "Machine Learning",
+            "Natural Language Processing",
+            "Computer Vision",
+            "Deep Learning",
+            "Reinforcement Learning",
+        ],
     },
     "Data Science": {
         "icon": "📊",
-        "subdomains": ["Statistical Analysis", "Data Visualisation", "Big Data Engineering"],
+        "subdomains": [
+            "Statistical Analysis",
+            "Data Visualisation",
+            "Big Data Engineering",
+            "Data Wrangling",
+        ],
+    },
+    "Programming": {
+        "icon": "💻",
+        "subdomains": [
+            "Python",
+            "JavaScript",
+            "Data Structures & Algorithms",
+        ],
     },
     "Web Development": {
         "icon": "🌐",
-        "subdomains": ["Frontend Development", "Backend Development", "DevOps & Deployment"],
+        "subdomains": [
+            "Frontend Development",
+            "Backend Development",
+        ],
     },
 }
+
 LEVELS = ["Beginner", "Intermediate", "Advanced", "Expert"]
 LEARNING_STYLES = [
     "📖  Reading articles & documentation",
@@ -23,10 +47,20 @@ LEARNING_STYLES = [
     "🧩  Solving quizzes & challenges",
     "👥  Peer discussion & mentoring",
 ]
-GOALS = ["Get a job / switch careers", "Upskill for my current role",
-         "Build a personal project", "Academic research", "General curiosity & exploration"]
-PACE = {"Casual": "~1–2 hrs / week", "Steady": "~3–5 hrs / week",
-        "Intensive": "~6–10 hrs / week", "Full-time": "10+ hrs / week"}
+GOALS = [
+    "Get a job / switch careers",
+    "Upskill for my current role",
+    "Build a personal project",
+    "Academic research",
+    "General curiosity & exploration",
+]
+PACE = {
+    "Casual": "~1–2 hrs / week",
+    "Steady": "~3–5 hrs / week",
+    "Intensive": "~6–10 hrs / week",
+    "Full-time": "10+ hrs / week",
+}
+
 
 def render():
     if "step" not in st.session_state:
@@ -44,6 +78,7 @@ def render():
         elif step == 4:
             render_step4()
 
+
 def render_step1():
     st.markdown("## 🧭 Step 1 — Tell us about yourself")
     st.markdown("Help us personalise your learning journey.")
@@ -60,8 +95,11 @@ def render_step1():
         role = st.text_input("Current role", value=pref.get("role", ""), placeholder="e.g. CS Student")
 
     st.markdown("#### 🎯 Domains of Interest")
-    selected_domains = st.multiselect("Choose domains", options=list(DOMAINS.keys()),
-                                       default=pref.get("domains", []))
+    selected_domains = st.multiselect(
+        "Choose domains",
+        options=list(DOMAINS.keys()),
+        default=pref.get("domains", []),
+    )
 
     selected_subdomains = pref.get("subdomains", {})
     if selected_domains:
@@ -69,23 +107,34 @@ def render_step1():
             meta = DOMAINS[domain]
             st.markdown(f"**{meta['icon']} {domain}**")
             selected_subdomains[domain] = st.multiselect(
-                f"Subdomains", options=meta["subdomains"],
+                "Subdomains",
+                options=meta["subdomains"],
                 default=selected_subdomains.get(domain, []),
-                key=f"sub_{domain}")
+                key=f"sub_{domain}",
+            )
 
     st.markdown("#### 🧠 Learning Style")
-    learning_style = st.radio("How do you learn best?", options=LEARNING_STYLES,
-                               index=LEARNING_STYLES.index(pref.get("learning_style", LEARNING_STYLES[0])))
+    learning_style = st.radio(
+        "How do you learn best?",
+        options=LEARNING_STYLES,
+        index=LEARNING_STYLES.index(pref.get("learning_style", LEARNING_STYLES[0])),
+    )
 
     st.markdown("#### 🚀 Goal & Pace")
     col_g, col_p = st.columns(2)
     with col_g:
-        goal = st.selectbox("Primary goal", options=GOALS,
-                            index=GOALS.index(pref.get("goal", GOALS[0])))
+        goal = st.selectbox(
+            "Primary goal",
+            options=GOALS,
+            index=GOALS.index(pref.get("goal", GOALS[0])),
+        )
     with col_p:
-        pace_key = st.selectbox("Weekly pace", options=list(PACE.keys()),
-                                index=list(PACE.keys()).index(pref.get("pace_key", "Steady")),
-                                format_func=lambda k: f"{k} · {PACE[k]}")
+        pace_key = st.selectbox(
+            "Weekly pace",
+            options=list(PACE.keys()),
+            index=list(PACE.keys()).index(pref.get("pace_key", "Steady")),
+            format_func=lambda k: f"{k} · {PACE[k]}",
+        )
 
     st.markdown("---")
     _, col_next = st.columns([3, 1])
@@ -97,13 +146,18 @@ def render_step1():
                 st.error("Please select at least one domain.")
             else:
                 st.session_state.pref = {
-                    "name": name.strip(), "role": role.strip(),
-                    "domains": selected_domains, "subdomains": selected_subdomains,
-                    "learning_style": learning_style, "goal": goal,
-                    "pace_key": pace_key, "pace_hours": PACE[pace_key],
+                    "name": name.strip(),
+                    "role": role.strip(),
+                    "domains": selected_domains,
+                    "subdomains": selected_subdomains,
+                    "learning_style": learning_style,
+                    "goal": goal,
+                    "pace_key": pace_key,
+                    "pace_hours": PACE[pace_key],
                 }
                 st.session_state.step = 2
                 st.rerun()
+
 
 def render_step2():
     st.markdown("## 🧠 Step 2 — Prior Knowledge")
@@ -128,18 +182,32 @@ def render_step2():
             st.markdown(f"**{sub}**")
             col_level, col_exp = st.columns([2, 3])
             with col_level:
-                level = st.select_slider(f"Level", options=LEVELS,
-                                         value=current_val.get("level", "Beginner"),
-                                         key=f"level_{key}")
+                level = st.select_slider(
+                    "Level",
+                    options=LEVELS,
+                    value=current_val.get("level", "Beginner"),
+                    key=f"level_{key}",
+                )
             with col_exp:
-                months = st.slider(f"Months of experience", 0, 60,
-                                   current_val.get("months_exp", 0), key=f"months_{key}")
-            topics = st.text_input("Topics you know (comma-separated)",
-                                   value=current_val.get("comfortable_topics", ""),
-                                   key=f"topics_{key}",
-                                   placeholder="e.g. linear regression, pandas")
-            knowledge[key] = {"domain": domain, "subdomain": sub, "level": level,
-                               "months_exp": months, "comfortable_topics": topics}
+                months = st.slider(
+                    "Months of experience",
+                    0, 60,
+                    current_val.get("months_exp", 0),
+                    key=f"months_{key}",
+                )
+            topics = st.text_input(
+                "Topics you know (comma-separated)",
+                value=current_val.get("comfortable_topics", ""),
+                key=f"topics_{key}",
+                placeholder="e.g. linear regression, pandas",
+            )
+            knowledge[key] = {
+                "domain": domain,
+                "subdomain": sub,
+                "level": level,
+                "months_exp": months,
+                "comfortable_topics": topics,
+            }
             st.markdown("---")
 
     col_back, _, col_next = st.columns([1, 2, 1])
@@ -152,6 +220,7 @@ def render_step2():
             st.session_state.knowledge = knowledge
             st.session_state.step = 3
             st.rerun()
+
 
 def render_step3():
     st.markdown("## ✅ Step 3 — Review Your Profile")
@@ -190,6 +259,7 @@ def render_step3():
                 st.rerun()
             else:
                 st.error("Failed to save. Check your database connection.")
+
 
 def render_step4():
     pref = st.session_state.pref
