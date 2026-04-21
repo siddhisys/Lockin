@@ -77,17 +77,20 @@ def _render_about():
         st.session_state["show_about"] = False
         st.rerun()
 
+    # Page header
     st.markdown("""
-    <div style="max-width:720px;margin:2rem auto 0;">
-        <div style="margin-bottom:2rem;">
-            <h1 style="margin-bottom:.25rem;">About Lockin</h1>
-            <p style="color:#78716C;font-size:.9375rem;font-weight:300;margin:0;">
-                Your personalised AI learning companion.
-            </p>
-            <div style="height:1px;background:#E9E7E2;margin-top:.9rem;"></div>
-        </div>
+    <div style="max-width:720px;margin:2rem auto 0 auto;margin-bottom:2rem;">
+        <h1 style="margin-bottom:.25rem;">About Lockin</h1>
+        <p style="color:#78716C;font-size:.9375rem;font-weight:300;margin:0;">
+            Your personalised AI learning companion.
+        </p>
+        <div style="height:1px;background:#E9E7E2;margin-top:.9rem;"></div>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <!-- Platform overview paragraphs -->
+    # Platform overview paragraphs
+    st.markdown("""
+    <div style="max-width:720px;margin:0 auto;">
         <p style="font-size:.9375rem;line-height:1.7;color:#18181B;">
             Lockin is an AI-powered learning platform built to help students and
             professionals take control of their education. We believe learning
@@ -98,8 +101,12 @@ def _render_about():
             summarise documents with AI, generate quizzes to test your knowledge,
             and chat with your study material — all in one place.
         </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <!-- Three-column feature cards: Mission, AI, Data -->
+    # Three-column feature cards: Mission, AI, Data
+    st.markdown("""
+    <div style="max-width:720px;margin:0 auto;">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:2rem 0;">
             <div style="background:#FFFFFF;border:1px solid #E9E7E2;border-radius:16px;
                 padding:1.25rem 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.06);">
@@ -129,8 +136,12 @@ def _render_about():
                 </div>
             </div>
         </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <!-- FYP context banner -->
+    # FYP context banner
+    st.markdown("""
+    <div style="max-width:720px;margin:0 auto;">
         <div style="background:#D1FAE5;border-radius:16px;padding:1.5rem 2rem;">
             <div style="font-size:.875rem;font-weight:600;color:#7fb009;margin-bottom:.3rem;">
                 Built as a Final Year Project</div>
@@ -161,18 +172,20 @@ def _render_contact():
         st.session_state["show_contact"] = False
         st.rerun()
 
-    # Page header and contact method cards (email + GitHub)
+    # Page header
     st.markdown("""
-    <div style="max-width:600px;margin:2rem auto 0;">
-        <div style="margin-bottom:2rem;">
-            <h1 style="margin-bottom:.25rem;">Contact Us</h1>
-            <p style="color:#78716C;font-size:.9375rem;font-weight:300;margin:0;">
-                Have a question or feedback? We'd love to hear from you.
-            </p>
-            <div style="height:1px;background:#E9E7E2;margin-top:.9rem;"></div>
-        </div>
+    <div style="max-width:600px;margin:2rem auto 0;margin-bottom:2rem;">
+        <h1 style="margin-bottom:.25rem;">Contact Us</h1>
+        <p style="color:#78716C;font-size:.9375rem;font-weight:300;margin:0;">
+            Have a question or feedback? We'd love to hear from you.
+        </p>
+        <div style="height:1px;background:#E9E7E2;margin-top:.9rem;"></div>
+    </div>
+    """, unsafe_allow_html=True)
 
-        <!-- Two-column cards: Email and GitHub -->
+    # Two-column contact method cards: Email and GitHub
+    st.markdown("""
+    <div style="max-width:600px;margin:0 auto;">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2rem;">
             <div style="background:#FFFFFF;border:1px solid #E9E7E2;border-radius:16px;
                 padding:1.25rem 1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.06);">
