@@ -62,14 +62,6 @@ def render():
     if "chat_use_manual" not in st.session_state:
         st.session_state.chat_use_manual = False
 
-    # ----------------------------------------------------------------
-    # Top bar — dashboard shortcut on the far right
-    # ----------------------------------------------------------------
-    top1, top2 = st.columns([6, 1])
-    with top2:
-        if st.button("🏠 Dashboard", key="chat_dashboard", use_container_width=True):
-            _nav("dashboard")
-
     # Page header
     st.markdown("""
     <div style="margin-bottom:1.75rem;">

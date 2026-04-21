@@ -106,12 +106,6 @@ def render():
     - PDF export functionality
     - Navigation to quiz and chatbot features
     """
-    
-    # Top navigation bar with dashboard button
-    top_col1, top_col2 = st.columns([6, 1])
-    with top_col2:
-        if st.button("🏠 Dashboard", key="sum_dashboard", use_container_width=True):
-            _nav("dashboard")
 
     # Page header with title and description
     st.markdown("""
